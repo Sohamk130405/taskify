@@ -1,22 +1,18 @@
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import axios from "axios";
 import { allOrg, selectedOrg } from "../atoms/orgAtom";
 import Dropdown from "./ui/Dropdown";
 import userAtom from "../atoms/userAtom";
-import {
-  NotificationsOutline,
-  PersonCircle,
-  SettingsOutline,
-  RefreshOutline,
-} from "react-ionicons";
+import { PersonCircle, SettingsOutline, RefreshOutline } from "react-ionicons";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const user = useRecoilValue(userAtom);
   const [organizations, setOrganizations] = useRecoilState(allOrg);
-  const [selectedOrganization, setSelectedOrganization] = useRecoilState(selectedOrg);
-  
+  const [selectedOrganization, setSelectedOrganization] =
+    useRecoilState(selectedOrg);
+
   useEffect(() => {
     const fetchOrgs = async () => {
       try {
@@ -46,7 +42,7 @@ const Navbar = () => {
     };
 
     user && fetchOrgs();
-  }, [user]);
+  }, [user, setOrganizations, setSelectedOrganization]);
   return (
     <div className="md:w-[calc(100%-230px)] w-[calc(100%-60px)] fixed flex items-center justify-between pl-2 pr-6 h-[70px] top-0 md:left-[230px] left-[60px] border-b border-slate-300 bg-[#fff]">
       {user && (
